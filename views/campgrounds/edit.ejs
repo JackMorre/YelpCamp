@@ -1,0 +1,135 @@
+<% layout("/layouts/boilerplate")%>
+
+<div class="row">
+	<h1 class="text-center">Edit Campground</h1>
+	<div class="col-md-6 offset-md-3">
+		<form
+			action="/campgrounds/<%=foundCampground._id%>?_method=put"
+			method="post"
+			novalidate
+			class="validated-form"
+			enctype="multipart/form-data"
+		>
+			<div class="mb-3">
+				<label
+					class="form-label"
+					for="title"
+					>Name:</label
+				>
+				<input
+					class="form-control"
+					type="text"
+					name="campground[title]"
+					id="title"
+					value="<%=foundCampground.title%>"
+					required
+				/>
+				<div class="valid-feedback">Looks good!</div>
+				<div class="invalid-feedback">Please add a name.</div>
+			</div>
+			<div class="mb-3">
+				<label
+					class="form-label"
+					for="location"
+					>Location:</label
+				>
+				<input
+					class="form-control"
+					type="text"
+					name="campground[location]"
+					id="location"
+					value="<%=foundCampground.location%>"
+					required
+				/>
+				<div class="valid-feedback">Looks good!</div>
+				<div class="invalid-feedback">Please add a location.</div>
+			</div>
+			<div class="mb-3">
+				<label
+					class="form-label"
+					for="price"
+					>Campground Price:</label
+				>
+				<div class="input-group">
+					<span
+						class="input-group-text"
+						id="price-label"
+						>£</span
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="price"
+						placeholder="0.00"
+						aria-label="Price"
+						aria-describedby="price-label"
+						name="campground[price]"
+						value="<%=foundCampground.price%>"
+						required
+					/>
+					<div class="valid-feedback">Looks good!</div>
+					<div class="invalid-feedback">Please add a price.</div>
+				</div>
+			</div>
+			<div class="mb-3">
+				<label
+					class="form-label"
+					for="description"
+					>Description:</label
+				>
+				<textarea
+					class="form-control"
+					type="text"
+					name="campground[description]"
+					id="description"
+					required
+				>
+<%=foundCampground.description%>
+        </textarea>
+				<div class="valid-feedback">Looks good!</div>
+				<div class="invalid-feedback">Please add a description.</div>
+			</div>
+			<div class="mb-3">
+				<label
+					for="image"
+					class="form-label"
+					name="image"
+					multiple
+					>Add More Images</label
+				>
+				<input
+					class="form-control"
+					type="file"
+					id="image"
+					multiple
+					name="image"
+				/>
+			</div>
+			<div class="mb-3">
+				<% foundCampground.images.forEach((img, i) => { %>
+				<img
+					src="<%=img.thumbnail%>"
+					alt=""
+					class="img-thumbnail"
+				/>
+				<div>
+					<label for="image-<%=i%>">Delete?</label>
+					<input
+						class="form-check-input"
+						type="checkbox"
+						name="deletedImages[]"
+						id="image-<%=i%>"
+						value="<%=img.fileName%>"
+						aria-label="..."
+					/>
+				</div>
+				<% }) %>
+			</div>
+
+			<div class="mt-2 d-flex justify-content-between">
+				<a href="/campgrounds/<%=foundCampground._id%>">Back</a>
+				<button class="btn btn-success">Update Campground</button>
+			</div>
+		</form>
+	</div>
+</div>
