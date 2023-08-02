@@ -22,17 +22,16 @@ const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
 const UrlDB = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
-mongoose.connect(UrlDB);
+mongoose.connect(UrlDB).catch(error => handleError(error));
 
-const connectDB = async () => {
-	try {
-	  const conn = await mongoose.connect(UrlDB);
-	  console.log(`MongoDB Connected: ${conn}, ${UrlDB}`);
-	} catch (error) {
-	  console.log(error);
-	  process.exit(1);
-	}
-  }
+// const connectDB = async () => {
+// 	try {
+// 	  await mongoose.connect(UrlDB);
+// 	} catch (error) {
+// 	  console.log(error);
+// 	  process.exit(1);
+// 	}
+//   }
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -147,10 +146,10 @@ app.use(async (err, req, res, next) => {
 	res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 300
+const port = process.env.PORT || 3000
 
-connectDB().then(() => {
-    app.listen(port, () => {
-        console.log("listening for requests");
-    })
+app.listen(port, () => {
+	console.log("listening for requests");
 })
+
+
