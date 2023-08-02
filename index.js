@@ -32,7 +32,15 @@ const connectDB = async () => {
 	  process.exit(1);
 	}
   }
-connectDB()
+
+  const port = process.env.PORT || 3000
+
+
+connectDB().then(()=> {
+	app.listen(port, () => {
+		console.log("listening for requests");
+	})
+})
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -147,10 +155,8 @@ app.use(async (err, req, res, next) => {
 	res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 3000
-
-app.listen(port, () => {
-	console.log("listening for requests");
-})
+// app.listen(port, () => {
+// 	console.log("listening for requests");
+// })
 
 
