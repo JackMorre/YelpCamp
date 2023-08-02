@@ -24,6 +24,16 @@ const UrlDB = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
 mongoose.connect(UrlDB);
 
+const connectDB = async () => {
+	try {
+	  const conn = await mongoose.connect(UrlDB);
+	  console.log(`MongoDB Connected: ${conn.connection.host}`);
+	} catch (error) {
+	  console.log(error);
+	  process.exit(1);
+	}
+  }
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
@@ -139,6 +149,8 @@ app.use(async (err, req, res, next) => {
 
 const port = process.env.PORT || 300
 
-app.listen(port, () => {
-	console.log(`serving on port ${port}`);
-});
+connectDB().then(() => {
+    app.listen(port, () => {
+        console.log("listening for requests");
+    })
+})
