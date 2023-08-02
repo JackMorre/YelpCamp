@@ -1,4 +1,4 @@
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN || mapToken;
+mapboxgl.accessToken = mapToken;
 const coord = campground.geometry.coordinates;
 const map = new mapboxgl.Map({
 	container: "map", // container ID

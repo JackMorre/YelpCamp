@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv/config");
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const Cities = require("./cities.js");
@@ -5,8 +9,9 @@ const { descriptors, places } = require("./seedHelpers.js");
 const path = require("path");
 const { fileURLToPath } = require("url");
 const Campground = require("../models/campground.js");
+const url = process.env.DB_URL
 
-mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp");
+mongoose.connect(url);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));

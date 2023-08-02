@@ -21,6 +21,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
 const UrlDB = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
+const port = process.env.PORT || 3000
 
 // mongoose.connect(UrlDB).catch(error => handleError(error));
 
@@ -32,15 +33,6 @@ const connectDB = async () => {
 	  process.exit(1);
 	}
   }
-
-  const port = process.env.PORT || 3000
-
-
-connectDB().then(()=> {
-	app.listen(port, () => {
-		console.log("listening for requests");
-	})
-})
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -155,8 +147,10 @@ app.use(async (err, req, res, next) => {
 	res.status(statusCode).render("error", { err });
 });
 
-// app.listen(port, () => {
-// 	console.log("listening for requests");
-// })
+connectDB().then(()=> {
+	app.listen(port, () => {
+		console.log("listening for requests");
+	})
+})
 
 
