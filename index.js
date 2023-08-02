@@ -22,16 +22,17 @@ const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
 const UrlDB = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
-mongoose.connect(UrlDB).catch(error => handleError(error));
+// mongoose.connect(UrlDB).catch(error => handleError(error));
 
-// const connectDB = async () => {
-// 	try {
-// 	  await mongoose.connect(UrlDB);
-// 	} catch (error) {
-// 	  console.log(error);
-// 	  process.exit(1);
-// 	}
-//   }
+const connectDB = async () => {
+	try {
+	  await mongoose.connect(UrlDB);
+	} catch (error) {
+	  console.log(error);
+	  process.exit(1);
+	}
+  }
+connectDB()
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
