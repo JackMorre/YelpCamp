@@ -27,6 +27,11 @@ mongoose.connect(UrlDB);
 const connectDB = async () => {
 	try {
 	  const conn = await mongoose.connect(UrlDB);
+	  const db = mongoose.connection;
+    db.on("error", console.error.bind(console, "connection error"));
+    db.once("open", () => {
+	console.log("database connected");
+    });
 	  console.log(`MongoDB Connected: ${conn.connection.host}`);
 	} catch (error) {
 	  console.log(error);
@@ -34,11 +39,11 @@ const connectDB = async () => {
 	}
   }
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", () => {
-	console.log("database connected");
-});
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error"));
+// db.once("open", () => {
+// 	console.log("database connected");
+// });
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
