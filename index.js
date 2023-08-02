@@ -32,7 +32,7 @@ const connectDB = async () => {
     db.once("open", () => {
 	console.log("database connected");
     });
-	  console.log(`MongoDB Connected: ${conn.connection.host}`);
+	  console.log(`MongoDB Connected: ${conn}`);
 	} catch (error) {
 	  console.log(error);
 	  process.exit(1);
