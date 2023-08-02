@@ -28,6 +28,9 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
 	console.log("database connected");
+	app.listen(3000, () => {
+		console.log("serving on port 3000");
+	});
 });
 
 // const __filename = fileURLToPath(import.meta.url);
@@ -137,6 +140,4 @@ app.use(async (err, req, res, next) => {
 	res.status(statusCode).render("error", { err });
 });
 
-app.listen(3000, () => {
-	console.log("serving on port 3000");
-});
+
