@@ -24,20 +24,7 @@ const UrlDB = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
 mongoose.connect(UrlDB);
 
-// const connectDB = async () => {
-// 	try {
-// 	  const conn = await mongoose.connect(UrlDB);
-// 	  console.log(`MongoDB Connected: ${conn.connection.host}`);
-// 	} catch (error) {
-// 	  console.log(error);
-// 	  process.exit(1);
-// 	}
-//   }
-
 const db = mongoose.connection;
-db.on("open", app.listen(3000, () => {
-	console.log("serving on port 3000");
-}));
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
 	console.log("database connected");
@@ -150,10 +137,6 @@ app.use(async (err, req, res, next) => {
 	res.status(statusCode).render("error", { err });
 });
 
-// connectDB().then(() => {
-//     app.listen(3000, () => {
-// 		console.log("serving on port 3000");
-// 	});
-// })
-
-
+app.listen(3000, () => {
+	console.log("serving on port 3000");
+});
